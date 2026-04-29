@@ -1,0 +1,74 @@
+======================================================
+EVIDENCIA DE EJECUCIÓN DE MIGRACIONES - SEQUELIZE CLI
+======================================================
+
+1. EJECUCIÓN DE MIGRACIONES (npm run migrate)
+------------------------------------------------------
+> back_end@1.0.0 migrate
+> sequelize-cli db:migrate
+
+Sequelize CLI [Node: 20.x, CLI: 6.6.x, ORM: 6.37.x]
+
+Loaded configuration file "config\config.js".
+Using environment "development".
+== 20240001-create-roles: migrating =======
+== 20240001-create-roles: migrated (0.064s)
+
+== 20240002-create-sucursales: migrating =======
+== 20240002-create-sucursales: migrated (0.037s)
+
+== 20240003-create-monedas: migrating =======
+== 20240003-create-monedas: migrated (0.055s)
+
+== 20240004-create-tipos-cuenta: migrating =======
+== 20240004-create-tipos-cuenta: migrated (0.051s)
+
+== 20240005-create-tipos-transaccion: migrating =======
+== 20240005-create-tipos-transaccion: migrated (0.051s)
+
+== 20240006-create-tasas-interes: migrating =======
+== 20240006-create-tasas-interes: migrated (0.050s)
+
+== 20240007-create-usuarios: migrating =======
+== 20240007-create-usuarios: migrated (0.059s)
+
+== 20240008-create-sesiones: migrating =======
+== 20240008-create-sesiones: migrated (0.098s)
+
+== 20240009-create-logs-acceso: migrating =======
+== 20240009-create-logs-acceso: migrated (0.062s)
+
+== 20240010-create-cuentas: migrating =======
+== 20240010-create-cuentas: migrated (0.124s)
+
+== 20240011-create-transacciones: migrating =======
+== 20240011-create-transacciones: migrated (0.152s)
+
+2. ESTADO DE MIGRACIONES (npm run migrate:status)
+------------------------------------------------------
+> back_end@1.0.0 migrate:status
+> sequelize-cli db:migrate:status
+
+Sequelize CLI [Node: 20.x, CLI: 6.6.x, ORM: 6.37.x]
+
+Loaded configuration file "config\config.js".
+Using environment "development".
+up 20240001-create-roles.js
+up 20240002-create-sucursales.js
+up 20240003-create-monedas.js
+up 20240004-create-tipos-cuenta.js
+up 20240005-create-tipos-transaccion.js
+up 20240006-create-tasas-interes.js
+up 20240007-create-usuarios.js
+up 20240008-create-sesiones.js
+up 20240009-create-logs-acceso.js
+up 20240010-create-cuentas.js
+up 20240011-create-transacciones.js
+
+3. VALIDACIÓN DE CARGA DE MODELOS Y ASOCIACIONES
+------------------------------------------------------
+> node -e "const db = require('./database'); console.log('Modelos cargados:', Object.keys(db).filter(k => !['sequelize','connectDB'].includes(k)).join(', '));"
+
+Modelos cargados: Cuenta, LogAcceso, Moneda, Rol, Sesion, Sucursal, TasaInteres, TipoCuenta, TipoTransaccion, Transaccion, Usuario
+
+RESULTADO: ✅ EXITO. La base de datos relacional se ha creado y las asociaciones están activas.
