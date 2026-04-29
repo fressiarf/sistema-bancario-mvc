@@ -1,0 +1,17 @@
+'use strict';
+
+const path = require('path');
+
+/**
+ * Archivo de configuración de rutas para sequelize-cli.
+ * Le indica a los comandos (db:migrate, db:seed, model:generate, etc.)
+ * en qué carpetas buscar/guardar cada tipo de archivo del proyecto.
+ *
+ * Documentación: https://sequelize.org/docs/v6/other-topics/migrations/#the-sequelizerc-file
+ */
+module.exports = {
+  'config': path.resolve('db', 'config.json'),         // Config de conexión para la CLI
+  'models-path': path.resolve('models'),               // Directorio de modelos Sequelize
+  'seeders-path': path.resolve('seeders'),             // Directorio de seeders (datos iniciales)
+  'migrations-path': path.resolve('migrations'),       // Directorio de migraciones
+};
