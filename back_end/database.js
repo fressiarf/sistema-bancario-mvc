@@ -71,9 +71,9 @@ Object.values(db).forEach((model) => {
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log(`✅ [Database] Conexión a MySQL establecida [entorno: ${env}]`);
+    console.log(`[Database] Conexión a MySQL establecida [entorno: ${env}]`);
   } catch (error) {
-    console.error('❌ [Database] Error al conectar con MySQL:', error.message);
+    console.error('[Database] Error al conectar con MySQL:', error.message);
     process.exit(1);
   }
 };

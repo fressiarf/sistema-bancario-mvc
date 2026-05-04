@@ -5,7 +5,7 @@ const cuentaController = {
     try {
       const cuentas = await Cuenta.findAll({
         include: [
-          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre', 'apellidos'] },
+          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre_completo', 'email'] },
           { model: TipoCuenta, as: 'tipoCuenta' },
           { model: Moneda, as: 'moneda' },
           { model: Sucursal, as: 'sucursal' }
@@ -22,7 +22,7 @@ const cuentaController = {
       const { id } = req.params;
       const cuenta = await Cuenta.findByPk(id, {
         include: [
-          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre', 'apellidos'] },
+          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre_completo', 'email'] },
           { model: TipoCuenta, as: 'tipoCuenta' },
           { model: Moneda, as: 'moneda' },
           { model: Sucursal, as: 'sucursal' }

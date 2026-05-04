@@ -71,4 +71,4 @@ up 20240011-create-transacciones.js
 
 Modelos cargados: Cuenta, LogAcceso, Moneda, Rol, Sesion, Sucursal, TasaInteres, TipoCuenta, TipoTransaccion, Transaccion, Usuario
 
-RESULTADO: ✅ EXITO. La base de datos relacional se ha creado y las asociaciones están activas.
+RESULTADO: EXITO. La base de datos relacional se ha creado y las asociaciones están activas.

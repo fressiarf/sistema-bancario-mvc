@@ -65,17 +65,22 @@ const transaccionController = {
     const t = await sequelize.transaction();
 
     try {
-      const { 
-        cuenta_origen_id, 
-        cuenta_destino_id, 
-        monto, 
-        tipo_transaccion_id, 
-        comision = 0, 
-        referencia, 
-        descripcion 
+      const {
+        cuenta_origen_id,
+        cuenta_destino_id,
+        monto,
+        tipo_transaccion_id,
+        comision = 0,
+        referencia,
+        descripcion
       } = req.body;
 
-      // 1. Validar montos y cuentas
+      // 1. Validar autotransferencia
+      if (cuenta_origen_id === cuenta_destino_id) {
+        throw new Error('No se permite realizar transferencias a la misma cuenta de origen.');
+      }
+
+      // 2. Validar montos y cuentas
       const montoNum = parseFloat(monto);
       const comisionNum = parseFloat(comision);
       const montoTotal = montoNum + comisionNum;
@@ -89,29 +94,31 @@ const transaccionController = {
 
       if (!cuentaOrigen) throw new Error('La cuenta de origen no existe');
       if (!cuentaDestino) throw new Error('La cuenta de destino no existe');
-      if (cuentaOrigen.estado !== 'activa') throw new Error('La cuenta de origen no está activa');
-      if (cuentaDestino.estado !== 'activa' && cuentaDestino.estado !== 'bloqueada') { // Se puede depositar en bloqueadas según política, o ajustar.
+      if (cuentaOrigen.estado !== 'activa') {
+        throw new Error(`La cuenta de origen está ${cuentaOrigen.estado}. Solo las cuentas activas pueden transferir.`);
+      }
+      if (cuentaDestino.estado !== 'activa' && cuentaDestino.estado !== 'bloqueada') {
         throw new Error('La cuenta de destino no está apta para recibir fondos');
       }
 
-      // 2. Validar saldo disponible
+      // 3. Validar saldo disponible
       if (parseFloat(cuentaOrigen.saldo_disponible) < montoTotal) {
         throw new Error('Fondos insuficientes en la cuenta de origen');
       }
 
-      // 3. Descontar de cuenta origen
+      // 4. Descontar de cuenta origen
       await cuentaOrigen.update({
         saldo: parseFloat(cuentaOrigen.saldo) - montoTotal,
         saldo_disponible: parseFloat(cuentaOrigen.saldo_disponible) - montoTotal
       }, { transaction: t });
 
-      // 4. Sumar a cuenta destino (solo se suma el monto, no la comisión)
+      // 5. Sumar a cuenta destino (solo se suma el monto, no la comisión)
       await cuentaDestino.update({
         saldo: parseFloat(cuentaDestino.saldo) + montoNum,
         saldo_disponible: parseFloat(cuentaDestino.saldo_disponible) + montoNum
       }, { transaction: t });
 
-      // 5. Registrar la transacción
+      // 6. Registrar la transacción
       const nuevaTransaccion = await Transaccion.create({
         tipo_transaccion_id,
         cuenta_origen_id,
@@ -133,7 +140,7 @@ const transaccionController = {
 
     } catch (error) {
       // Si algo falla, revertimos todos los cambios en base de datos
-      await t.rollback();
+      if (t) await t.rollback();
       res.status(400).json({ message: 'Error en la transferencia', error: error.message });
     }
   }
