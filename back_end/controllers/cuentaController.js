@@ -5,10 +5,9 @@ const cuentaController = {
     try {
       const cuentas = await Cuenta.findAll({
         include: [
-          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre_completo', 'email'] },
-          { model: TipoCuenta, as: 'tipoCuenta' },
-          { model: Moneda, as: 'moneda' },
-          { model: Sucursal, as: 'sucursal' }
+          { model: Usuario, as: 'propietario', attributes: ['nombre_completo', 'email'] },
+          { model: TipoCuenta, as: 'tipoCuenta', attributes: ['nombre'] },
+          { model: Moneda, as: 'moneda', attributes: ['nombre'] }
         ]
       });
       res.status(200).json(cuentas);
@@ -22,10 +21,9 @@ const cuentaController = {
       const { id } = req.params;
       const cuenta = await Cuenta.findByPk(id, {
         include: [
-          { model: Usuario, as: 'propietario', attributes: ['id', 'nombre_completo', 'email'] },
-          { model: TipoCuenta, as: 'tipoCuenta' },
-          { model: Moneda, as: 'moneda' },
-          { model: Sucursal, as: 'sucursal' }
+          { model: Usuario, as: 'propietario', attributes: ['nombre_completo', 'email'] },
+          { model: TipoCuenta, as: 'tipoCuenta', attributes: ['nombre'] },
+          { model: Moneda, as: 'moneda', attributes: ['nombre'] }
         ]
       });
       if (!cuenta) {

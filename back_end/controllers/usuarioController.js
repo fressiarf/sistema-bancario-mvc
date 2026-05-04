@@ -6,7 +6,7 @@ const usuarioController = {
     try {
       const usuarios = await Usuario.findAll({
         attributes: { exclude: ['contrasenia_hash'] }, // Seguridad: No devolver el hash
-        include: [{ model: Rol, as: 'rol' }]
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
       });
       res.status(200).json(usuarios);
     } catch (error) {
@@ -19,7 +19,7 @@ const usuarioController = {
       const { id } = req.params;
       const usuario = await Usuario.findByPk(id, {
         attributes: { exclude: ['contrasenia_hash'] },
-        include: [{ model: Rol, as: 'rol' }]
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
       });
       if (!usuario) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
