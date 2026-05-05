@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const transaccionController = require('../controllers/transaccionController');
+const { restringirA } = require('../middlewares/roleMiddleware');
 
-// Lógica especial de transferencia
+const soloAdmin = restringirA('Administrador', 'administrador', 'admin');
+
+// Cualquier autenticado puede hacer transferencias
 router.post('/transferencia', transaccionController.realizarTransferencia);
 
-// Rutas CRUD estándar
-router.get('/', transaccionController.findAll);
-router.get('/:id', transaccionController.findByPk);
-router.post('/', transaccionController.create);
-router.put('/:id', transaccionController.update);
-router.delete('/:id', transaccionController.destroy);
+// CRUD completo solo para admin
+router.get('/', soloAdmin, transaccionController.findAll);
+router.get('/:id', soloAdmin, transaccionController.findByPk);
+router.post('/', soloAdmin, transaccionController.create);
+router.put('/:id', soloAdmin, transaccionController.update);
+router.delete('/:id', soloAdmin, transaccionController.destroy);
 
 module.exports = router;

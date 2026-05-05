@@ -40,13 +40,6 @@ module.exports = (sequelize) => {
         as: 'transaccionesAprobadas',
       });
     }
-
-    /**
-     * Sobrescribe toJSON para excluir contrasenia_hash de las respuestas JSON.
-     * Este método se llama automáticamente cuando se serializa la instancia
-     * (ej. res.json(usuario)), garantizando que la contraseña nunca salga en la API.
-     * @returns {object} Instancia sin el campo contrasenia_hash
-     */
     toJSON() {
       const values = { ...this.get() };
       delete values.contrasenia_hash;
@@ -109,6 +102,7 @@ module.exports = (sequelize) => {
           min: { args: [0], msg: 'Los intentos fallidos no pueden ser negativos.' },
         },
       },
+
       bloqueado_hasta: {
         type: DataTypes.DATE,
         allowNull: true,

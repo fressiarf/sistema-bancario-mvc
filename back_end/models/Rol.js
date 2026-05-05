@@ -4,11 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Rol extends Model {
-    /**
-     * Define las asociaciones del modelo.
-     * Un rol puede tener múltiples usuarios asignados.
-     * @param {object} models - Todos los modelos cargados
-     */
+  
     static associate(models) {
       Rol.hasMany(models.Usuario, {
         foreignKey: 'rol_id',

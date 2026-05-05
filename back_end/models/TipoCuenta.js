@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class TipoCuenta extends Model {
-    /**
-     * Un tipo de cuenta puede tener múltiples cuentas y múltiples tasas históricas.
-     * @param {object} models - Todos los modelos cargados
-     */
+    
     static associate(models) {
       TipoCuenta.hasMany(models.Cuenta, {
         foreignKey: 'tipo_cuenta_id',

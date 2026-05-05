@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const sesionController = require('../controllers/sesionController');
+const { restringirA } = require('../middlewares/roleMiddleware');
+
+const soloAdmin = restringirA('Administrador', 'administrador', 'admin');
+
+// Solo admin puede ver y gestionar sesiones
+router.use(soloAdmin);
 
 router.get('/', sesionController.findAll);
 router.get('/:id', sesionController.findByPk);

@@ -2,13 +2,15 @@
 
 Este proyecto es la primera fase del backend para un sistema de servicios bancarios y financieros. Está desarrollado en Node.js utilizando **Sequelize (ORM)** para la gestión de la base de datos relacional (MySQL).
 
-## Estado del Proyecto (Fase 1)
+## Estado del Proyecto (Fase 2 - Seguridad y Autenticación)
 
-Actualmente, el proyecto cumple con la estructura base de datos y arquitectura, lo cual incluye:
-- Modelos Sequelize definidos y documentados.
-- Migraciones configuradas y validadas.
-- Relaciones y asociaciones (1:N, N:M, auto-referenciales) establecidas.
-- Controladores y Rutas (Planeados para la próxima fase).
+Actualmente, el proyecto ha completado la implementación de su capa de seguridad robusta:
+- **Autenticación JWT**: Sistema de login con tokens seguros y expiración configurable.
+- **Seguridad con Bcrypt**: Encriptación de contraseñas de alto nivel.
+- **Autorización por Roles**: Middlewares dinámicos para proteger rutas según el rol (Admin, Cajero, Cliente).
+- **Protección Global**: Restricción automática de métodos sensibles (como DELETE solo para administradores).
+- **Auditoría (Logs)**: Registro automático de cada intento de acceso exitoso o fallido.
+- **Arquitectura MVC Limpia**: Código modular, sin comentarios redundantes y listo para escalabilidad.
 
 ## Documentación Técnica
 
@@ -37,6 +39,10 @@ DB_NAME=sistema_bancario_mvc
 DB_USER=tu_usuario_mysql
 DB_PASSWORD=tu_password_mysql
 NODE_ENV=development
+
+# Configuración de Seguridad JWT
+JWT_SECRET=tu_clave_secreta_super_segura
+JWT_EXPIRES_IN=1h
 ```
 
 ### 3. Ejecutar Migraciones
@@ -47,6 +53,7 @@ npm run migrate
 *(Nota: Puedes revisar el archivo `evidencia_migraciones.txt` para validar cómo se ve una ejecución exitosa de este comando).*
 
 ## Tecnologías Utilizadas
-* **Entorno:** Node.js
+* **Entorno:** Node.js (Express)
+* **Seguridad:** JSON Web Tokens (JWT) & Bcryptjs
 * **Base de Datos:** MySQL
 * **ORM:** Sequelize & Sequelize-CLI

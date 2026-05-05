@@ -1,6 +1,22 @@
 const { Cuenta, Usuario, TipoCuenta, Moneda, Sucursal } = require('../models');
 
 const cuentaController = {
+  // El usuario autenticado ve solo sus propias cuentas
+  misCuentas: async (req, res) => {
+    try {
+      const cuentas = await Cuenta.findAll({
+        where: { usuario_id: req.usuario.id },
+        include: [
+          { model: TipoCuenta, as: 'tipoCuenta', attributes: ['nombre'] },
+          { model: Moneda, as: 'moneda', attributes: ['nombre'] }
+        ]
+      });
+      res.status(200).json(cuentas);
+    } catch (error) {
+      res.status(500).json({ message: 'Error al obtener cuentas', error: error.message });
+    }
+  },
+
   findAll: async (req, res) => {
     try {
       const cuentas = await Cuenta.findAll({

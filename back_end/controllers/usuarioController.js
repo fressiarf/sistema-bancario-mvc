@@ -2,10 +2,23 @@ const { Usuario, Rol } = require('../models');
 const bcrypt = require('bcryptjs');
 
 const usuarioController = {
+  // El usuario autenticado consulta su propia info
+  miPerfil: async (req, res) => {
+    try {
+      const usuario = await Usuario.findByPk(req.usuario.id, {
+        attributes: { exclude: ['contrasenia_hash'] },
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
+      });
+      res.status(200).json(usuario);
+    } catch (error) {
+      res.status(500).json({ message: 'Error al obtener perfil', error: error.message });
+    }
+  },
+
   findAll: async (req, res) => {
     try {
       const usuarios = await Usuario.findAll({
-        attributes: { exclude: ['contrasenia_hash'] }, // Seguridad: No devolver el hash
+        attributes: { exclude: ['contrasenia_hash'] },
         include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
       });
       res.status(200).json(usuarios);
@@ -32,11 +45,10 @@ const usuarioController = {
 
   create: async (req, res) => {
     try {
-      const { password, ...userData } = req.body;
+      const { contrasenia, ...userData } = req.body;
       
-      // Cifrar contraseña antes de guardar
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = await bcrypt.hash(contrasenia, salt);
       
       const usuario = await Usuario.create({
         ...userData,
@@ -52,17 +64,16 @@ const usuarioController = {
   update: async (req, res) => {
     try {
       const { id } = req.params;
-      const { password, ...userData } = req.body;
+      const { contrasenia, ...userData } = req.body;
       
       const usuario = await Usuario.findByPk(id);
       if (!usuario) {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
 
-      // Si viene una nueva contraseña, cifrarla
-      if (password) {
+      if (contrasenia) {
         const salt = await bcrypt.genSalt(10);
-        userData.contrasenia_hash = await bcrypt.hash(password, salt);
+        userData.contrasenia_hash = await bcrypt.hash(contrasenia, salt);
       }
 
       await usuario.update(userData);
@@ -80,7 +91,7 @@ const usuarioController = {
         return res.status(404).json({ message: 'Usuario no encontrado' });
       }
       await usuario.destroy();
-      res.status(200).json({ message: 'Usuario eliminado exitosamente' });
+      res.status(200).json({ message: 'Usuario eliminado' });
     } catch (error) {
       res.status(500).json({ message: 'Error al eliminar usuario', error: error.message });
     }

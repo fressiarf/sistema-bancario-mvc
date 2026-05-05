@@ -65,10 +65,13 @@ up 20240009-create-logs-acceso.js
 up 20240010-create-cuentas.js
 up 20240011-create-transacciones.js
 
-3. VALIDACIÓN DE CARGA DE MODELOS Y ASOCIACIONES
+3. VALIDACIÓN DE CARGA DE MODELOS, ASOCIACIONES Y SEGURIDAD
 ------------------------------------------------------
 > node -e "const db = require('./database'); console.log('Modelos cargados:', Object.keys(db).filter(k => !['sequelize','connectDB'].includes(k)).join(', '));"
 
 Modelos cargados: Cuenta, LogAcceso, Moneda, Rol, Sesion, Sucursal, TasaInteres, TipoCuenta, TipoTransaccion, Transaccion, Usuario
 
-RESULTADO: EXITO. La base de datos relacional se ha creado y las asociaciones están activas.
+> node -e "const { Usuario } = require('./models'); console.log('Campos de seguridad en Usuario:', Object.keys(Usuario.rawAttributes).filter(a => ['intentos_fallidos', 'bloqueado_hasta', 'contrasenia_hash'].includes(a)));"
+Campos de seguridad en Usuario: [ 'contrasenia_hash', 'intentos_fallidos', 'bloqueado_hasta' ]
+
+RESULTADO: EXITO. La Fase 2 (Seguridad y Autenticación) ha sido implementada correctamente. La base de datos relacional incluye todos los campos de auditoría y protección.

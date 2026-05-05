@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Importar rutas
+const { verificarToken } = require('../middlewares/authMiddleware');
+const { restringirA } = require('../middlewares/roleMiddleware');
+
+const authRoutes = require('./authRoutes');
 const rolRoutes = require('./rolRoutes');
 const sucursalRoutes = require('./sucursalRoutes');
 const monedaRoutes = require('./monedaRoutes');
@@ -14,7 +17,21 @@ const logAccesoRoutes = require('./logAccesoRoutes');
 const sesionRoutes = require('./sesionRoutes');
 const transaccionRoutes = require('./transaccionRoutes');
 
-// Definir prefijos de rutas
+// Rutas Públicas
+router.use('/auth', authRoutes);
+
+// Middleware de autenticación global
+router.use(verificarToken);
+
+// Restricción global: Solo admin puede ejecutar DELETE
+router.use((req, res, next) => {
+  if (req.method === 'DELETE') {
+    return restringirA('Administrador')(req, res, next);
+  }
+  next();
+});
+
+// Rutas Privadas
 router.use('/roles', rolRoutes);
 router.use('/sucursales', sucursalRoutes);
 router.use('/monedas', monedaRoutes);

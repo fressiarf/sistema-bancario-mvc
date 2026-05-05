@@ -50,6 +50,27 @@ El diseño de la base de datos se rige por fuertes restricciones de claves forá
 ### 4. Criterios de Integridad Aplicados en Modelos (Sequelize)
 * **onUpdate: 'CASCADE' y onDelete: 'RESTRICT'**: Se aplicó en todas las claves foráneas para evitar la eliminación de registros padre que tengan hijos activos.
 * **Borrado Lógico**: La eliminación se maneja mediante campos `activa` (boolean) o `estado` (enum), nunca se ejecuta un `DELETE` físico.
-* **Exclusión de Datos Sensibles**: El modelo `Usuario` excluye por defecto el `contrasenia_hash` en las consultas para evitar fugas de información en endpoints futuros.
-* **Campos de Montos Precisos**: Todos los saldos y montos utilizan el tipo `DECIMAL(15, 2)` para evitar problemas de coma flotante.
-* **Timestamps Obligatorios**: `createdAt` y `updatedAt` gestionados automáticamente en todas las tablas para trazabilidad cronológica.
+* **Exclusión de Datos Sensibles**: El modelo `Usuario` excluye por defecto el `contrasenia_hash` en las consultas.
+* **Campos de Montos Precisos**: Todos los saldos y montos utilizan el tipo `DECIMAL(15, 2)`.
+* **Timestamps Obligatorios**: `createdAt` y `updatedAt` en todas las tablas para trazabilidad.
+
+---
+
+### 5. Arquitectura de Seguridad y Autenticación
+
+El sistema implementa una arquitectura de seguridad por capas para proteger los activos financieros:
+
+#### 5.1 Capa de Autenticación (JWT)
+* **Emisión de Tokens**: Al hacer login, el sistema valida las credenciales y emite un JSON Web Token firmado con una clave secreta privada.
+* **Persistencia**: El token incluye el `id` y `rol_id` del usuario, permitiendo identificarlo en cada petición sin consultar la base de datos constantemente.
+* **Cifrado**: Las contraseñas se procesan mediante **Bcryptjs** con un factor de costo de 10, asegurando que incluso en caso de fuga de base de datos, las claves originales sean irrecuperables.
+
+#### 5.2 Capa de Autorización (Middleware de Roles)
+* **Validación de Token**: Un middleware global intercepta las peticiones, verifica la firma del JWT y extrae al usuario actual.
+* **Control de Acceso (RBAC)**: Se utiliza un sistema de control de acceso basado en roles. Rutas críticas (como la gestión de roles o usuarios) están restringidas únicamente a usuarios con rol `administrador`.
+* **Protección de Métodos**: Se implementó una regla global donde el método `DELETE` está prohibido para cualquier usuario que no sea administrador, sin importar la tabla a la que intente acceder.
+
+#### 5.3 Capa de Auditoría y Control
+* **Logs de Acceso**: Cada intento de login se registra en la tabla `logs_acceso`, capturando la IP del cliente, el éxito o fallo de la operación y el motivo en caso de error.
+* **Seguridad de Cuenta**: El modelo de usuario incluye el campo `intentos_fallidos` para permitir la implementación futura de bloqueos automáticos por fuerza bruta.
+
