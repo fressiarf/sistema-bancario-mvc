@@ -1,9 +1,13 @@
 import React from "react";
 import Sidebar from "../components/dashboard/sidebar/Sidebar";
 import Navbar from "../components/dashboard/navbar/Navbar";
+import RolesTable from "../components/dashboard/roles/RolesTable";
+import { useAuth } from "../context/AuthContext";
 import "./Dashboard.css";
 
 const Dashboard = () => {
+    const { user } = useAuth();
+    
     // Datos mock para las tarjetas de resumen
     const stats = [
         { 
@@ -31,6 +35,9 @@ const Dashboard = () => {
             change: "100%" 
         },
     ];
+
+    // Verificar si es administrador
+    const esAdmin = user?.rol?.nombre?.toLowerCase().includes('admin');
 
     return (
         <div className="dashboard-layout">
@@ -77,6 +84,9 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Solo el Administrador puede gestionar roles */}
+                        {esAdmin && <RolesTable />}
                     </section>
                 </main>
             </div>

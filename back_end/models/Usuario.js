@@ -62,6 +62,14 @@ module.exports = (sequelize) => {
           notNull: { msg: 'Se requiere asignar un rol al usuario.' },
         },
       },
+      identificacion: {
+        type: DataTypes.STRING(20),
+        allowNull: true,
+        unique: {
+          name: 'uk_usuarios_identificacion',
+          msg: 'Ya existe un usuario con esta identificación.'
+        }
+      },
       nombre_completo: {
         type: DataTypes.STRING(150),
         allowNull: false,
@@ -69,6 +77,10 @@ module.exports = (sequelize) => {
           notEmpty: { msg: 'El nombre completo no puede estar vacío.' },
           len: { args: [2, 150], msg: 'El nombre debe tener entre 2 y 150 caracteres.' },
         },
+      },
+      puesto: {
+        type: DataTypes.STRING(100),
+        allowNull: true
       },
       email: {
         type: DataTypes.STRING(150),
@@ -85,6 +97,10 @@ module.exports = (sequelize) => {
       telefono: {
         type: DataTypes.STRING(20),
         allowNull: true,
+      },
+      direccion: {
+        type: DataTypes.TEXT,
+        allowNull: true
       },
       contrasenia_hash: {
         type: DataTypes.STRING(255),

@@ -87,9 +87,9 @@
 .logout-btn {
     width: 100%;
     padding: 12px;
-    background: rgba(206, 17, 38, 0.2); /* Rojo BCR sutil */
-    color: #ff9999;
-    border: 1px solid rgba(206, 17, 38, 0.4);
+    background: rgba(0, 163, 224, 0.1);
+    color: #00A3E0;
+    border: 1px solid rgba(0, 163, 224, 0.3);
     border-radius: 8px;
     cursor: pointer;
     font-weight: 600;
@@ -97,6 +97,6 @@
 }
 
 .logout-btn:hover {
-    background: #CE1126;
+    background: #00A3E0;
     color: #fff;
 }

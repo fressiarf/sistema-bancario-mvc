@@ -47,6 +47,24 @@ const usuarioController = {
     try {
       const { contrasenia, ...userData } = req.body;
       
+      // RESTRICCIÓN ROL EMPLEADO: Solo puede crear clientes
+      const rolSolicitante = await req.usuario.getRol();
+      
+      if (['Empleado', 'empleado'].includes(rolSolicitante.nombre)) {
+        // Buscar el ID del rol Cliente
+        const rolCliente = await Rol.findOne({ where: { nombre: ['Cliente', 'cliente'] } });
+        
+        // Si el empleado intenta asignar un rol que no sea cliente, lo bloqueamos
+        if (userData.rol_id && userData.rol_id != rolCliente.id) {
+          return res.status(403).json({ 
+            message: 'Como empleado, solo tienes permitido crear usuarios con el rol de Cliente.' 
+          });
+        }
+        
+        // Forzamos que sea cliente si no envió rol_id
+        userData.rol_id = rolCliente.id;
+      }
+
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(contrasenia, salt);
       

@@ -40,7 +40,7 @@ const FormLogin = () => {
     return (
         <div className="login-container horizontal">
             <div className="login-left">
-                <div className="bcr-logo-mock">BC</div>
+                <div className="bcr-logo-small">BN</div>
                 <div className="welcome-text">
                     <h3>Acceso Administrativo</h3>
                     <p>Ingrese sus credenciales para gestionar la plataforma bancaria de forma segura.</p>

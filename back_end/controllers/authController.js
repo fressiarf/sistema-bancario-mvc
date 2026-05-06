@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { Usuario, LogAcceso } = require('../models');
+const { Usuario, LogAcceso, Rol } = require('../models');
 
 const generarToken = (id, rol_id) => {
   return jwt.sign({ id, rol_id }, process.env.JWT_SECRET, {
@@ -19,8 +19,11 @@ const authController = {
         });
       }
 
-      // Buscar usuario incluyendo el hash de contraseña
-      const usuario = await Usuario.unscoped().findOne({ where: { email } });
+      // Buscar usuario incluyendo el hash de contraseña y el ROL
+      const usuario = await Usuario.unscoped().findOne({ 
+        where: { email },
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
+      });
 
       // Validar existencia y contraseña
       if (!usuario || !(await bcrypt.compare(contrasenia, usuario.contrasenia_hash))) {
