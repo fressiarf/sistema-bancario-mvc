@@ -1,0 +1,96 @@
+.dashboard-navbar {
+    height: 70px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    position: fixed;
+    top: 0;
+    left: 260px; /* Alineado exactamente después del sidebar */
+    width: calc(100% - 260px);
+    z-index: 90;
+    box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+}
+
+.search-box input {
+    width: 350px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f8f9fa;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+    border-color: #00A3E0;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 163, 224, 0.1);
+}
+
+.navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.notifications {
+    font-size: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #CE1126;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-info {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #888;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: #00A3E0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 700;
+}

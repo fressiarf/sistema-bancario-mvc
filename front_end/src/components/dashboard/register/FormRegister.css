@@ -78,6 +78,42 @@
     font-weight: 700;
 }
 
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #666;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+    background: #f8f9fa;
+    border-color: #002B7F;
+    color: #002B7F;
+}
+
+.back-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.back-btn:hover svg {
+    transform: translateX(-3px);
+}
+
 .admin-badge {
     display: inline-block;
     background: #eef2ff;
@@ -88,8 +124,8 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 15px;
     border: 1px solid #c7d2fe;
+    margin-bottom: 0;
 }
 
 .form-group {
@@ -131,22 +167,22 @@
     flex: 1;
 }
 
-button[type="submit"] {
+.register-submit-btn {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: linear-gradient(to right, #00A3E0, #0077b6);
     color: #fff;
     border: none;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
-    margin-top: 30px;
+    margin-top: 20px;
     transition: all 0.3s ease;
     box-shadow: 0 10px 20px rgba(0, 163, 224, 0.2);
 }
 
-button[type="submit"]:hover {
+.register-submit-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 25px rgba(0, 163, 224, 0.3);
     filter: brightness(1.1);

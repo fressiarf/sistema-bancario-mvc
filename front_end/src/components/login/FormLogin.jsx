@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { login } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import "./FormLogin.css";
 
 const FormLogin = () => {
+    const { loginUser } = useAuth();
     const [credentials, setCredentials] = useState({
         email: "",
         contrasenia: ""
@@ -23,10 +25,11 @@ const FormLogin = () => {
         try {
             const result = await login(credentials);
             if (result) {
+                loginUser(result.usuario);
                 setMensaje("¡Bienvenido!");
-                // Redirigir al registro o dashboard después de un breve delay
+                // Redirigir al dashboard después de un breve delay
                 setTimeout(() => {
-                    navigate("/register");
+                    navigate("/dashboard");
                 }, 1000);
             }
         } catch (error) {

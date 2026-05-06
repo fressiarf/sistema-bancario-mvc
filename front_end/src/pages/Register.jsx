@@ -1,5 +1,5 @@
 import React from "react";
-import FormRegister from "../components/register/FormRegister";
+import FormRegister from "../components/dashboard/register/FormRegister";
 
 const Register = () => {
     return (

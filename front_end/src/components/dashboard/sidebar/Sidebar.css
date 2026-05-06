@@ -1,0 +1,102 @@
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: #002B7F; /* Azul BCR */
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.bcr-logo-small {
+    font-size: 28px;
+    font-weight: 900;
+    font-style: italic;
+    background: #fff;
+    color: #002B7F;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.sidebar-header span {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: 20px 0;
+}
+
+.sidebar-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    margin-bottom: 5px;
+}
+
+.nav-item a {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    gap: 12px;
+}
+
+.nav-item a:hover, .nav-item.active a {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+    border-left: 4px solid #00A3E0; /* Celeste BCR */
+}
+
+.nav-item .icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.sidebar-footer {
+    padding: 30px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.logout-btn {
+    width: 100%;
+    padding: 12px;
+    background: rgba(206, 17, 38, 0.2); /* Rojo BCR sutil */
+    color: #ff9999;
+    border: 1px solid rgba(206, 17, 38, 0.4);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #CE1126;
+    color: #fff;
+}

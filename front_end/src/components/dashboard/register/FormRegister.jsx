@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { postUsuarios } from "../../services/userServices";
+import { postUsuarios } from "../../../services/userServices";
+import { useNavigate } from "react-router-dom";
 import "./FormRegister.css";
 
 const FormRegister = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         nombre_completo: "",
         email: "",
@@ -51,7 +53,17 @@ const FormRegister = () => {
             </div>
             <div className="register-right">
                 <div className="register-content">
-                    <div className="admin-badge">Sesión de Administrador</div>
+                    <div className="admin-header">
+                        <div className="admin-badge">Sesión de Administrador</div>
+                        <button className="back-btn" onClick={() => navigate("/dashboard")}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            Volver al Panel
+                        </button>
+                    </div>
+                    
                     <h2>Registro de Cliente</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
@@ -99,7 +111,7 @@ const FormRegister = () => {
                                 />
                             </div>
                         </div>
-                        <button type="submit">Registrar</button>
+                        <button type="submit" className="register-submit-btn">Registrar Cliente</button>
                     </form>
                     {mensaje && <p className="message">{mensaje}</p>}
                 </div>
