@@ -50,6 +50,13 @@ const authController = {
 
       const token = generarToken(usuario.id, usuario.rol_id);
 
+      // Enviar token en cookie
+      res.cookie('token', token, {
+        httpOnly: true, // Protege contra XSS
+        secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
+        maxAge: 8 * 60 * 60 * 1000 // 8 horas
+      });
+
       await LogAcceso.create({
         usuario_id: usuario.id,
         accion: 'LOGIN',
@@ -63,7 +70,6 @@ const authController = {
 
       res.status(200).json({
         message: 'Autenticación exitosa',
-        token,
         usuario: datosUsuario,
       });
     } catch (error) {

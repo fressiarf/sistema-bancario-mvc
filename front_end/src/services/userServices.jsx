@@ -9,8 +9,8 @@ export async function postUsuarios(usuario){
             headers:{
                 "Content-Type":"application/json"
             },
-            body:JSON.stringify(usuario)
-
+            body:JSON.stringify(usuario),
+            credentials: "include"
         })
 
         const datosUsuarios= await respuesta.json();

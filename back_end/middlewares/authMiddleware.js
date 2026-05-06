@@ -4,8 +4,14 @@ const { Usuario } = require('../models');
 const verificarToken = async (req, res, next) => {
   try {
     let token;
+    
+    // Buscar en headers
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
       token = req.headers.authorization.split(' ')[1];
+    } 
+    // Buscar en cookies (nombre: 'jwt' o 'token')
+    else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
     }
 
     if (!token) {

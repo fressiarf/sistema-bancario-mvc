@@ -2,6 +2,7 @@ require('dotenv').config(); // Carga las variables de entorno PRIMERO
 
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const { connectDB } = require('./database'); // Usa la función centralizada de database.js
 const routes = require('./routes');
 
@@ -9,7 +10,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // Puerto por defecto de Vite
+  credentials: true
+}));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
