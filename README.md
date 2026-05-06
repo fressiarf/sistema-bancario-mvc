@@ -1,59 +1,76 @@
-# Sistema Bancario MVC - Backend
+# Sistema Bancario Integral (Full-Stack MVC)
 
-Este proyecto es la primera fase del backend para un sistema de servicios bancarios y financieros. Está desarrollado en Node.js utilizando **Sequelize (ORM)** para la gestión de la base de datos relacional (MySQL).
+Este repositorio contiene la implementación completa de un sistema de gestión bancaria y financiera, desarrollado con un enfoque en seguridad, integridad de datos y experiencia de usuario.
 
-## Estado del Proyecto (Fase 2 - Seguridad y Autenticación)
+---
 
-Actualmente, el proyecto ha completado la implementación de su capa de seguridad robusta:
-- **Autenticación JWT**: Sistema de login con tokens seguros y expiración configurable.
-- **Seguridad con Bcrypt**: Encriptación de contraseñas de alto nivel.
-- **Autorización por Roles**: Middlewares dinámicos para proteger rutas según el rol (Admin, Cajero, Cliente).
-- **Protección Global**: Restricción automática de métodos sensibles (como DELETE solo para administradores).
-- **Auditoría (Logs)**: Registro automático de cada intento de acceso exitoso o fallido.
-- **Arquitectura MVC Limpia**: Código modular, sin comentarios redundantes y listo para escalabilidad.
+## Estado del Proyecto: Fase de Integración
+
+Actualmente, el proyecto ha superado la implementación del núcleo del Backend y se encuentra en fase de integración con el Frontend.
+
+### Backend (Node.js + Express + Sequelize)
+* **Seguridad Robusta**: Autenticación JWT con tokens firmados y expiración.
+* **Protección de Datos**: Cifrado de contraseñas con Bcryptjs (Cost factor 10).
+* **Control de Acceso (RBAC)**: Middlewares para autorizar acciones basadas en roles (Admin, Cajero, Cliente).
+* **Base de Datos Relacional**: Modelos complejos con integridad referencial y auditoría integrada.
+
+### Frontend (React + Vite)
+* **Interfaz Moderna**: SPA rápida y responsiva en desarrollo.
+* **Consumo de API**: Integración con los endpoints de seguridad y transacciones.
+* **Estado Global**: Gestión centralizada de la sesión del usuario.
+
+---
 
 ## Documentación Técnica
 
-Para entender a profundidad la estructura de la base de datos, las entidades, relaciones y restricciones de integridad que rigen el núcleo financiero de esta aplicación, por favor revisa nuestro documento de diseño:
+Para entender a profundidad la arquitectura, el modelo de datos y las reglas de negocio, consulta nuestro documento principal:
 
-[Leer el Documento de Diseño (Design Document)](./back_end/design_document.md)
+[Documento de Diseño y Análisis (Design Document)](./design_document.md)
 
-## Guía de Instalación y Uso
+---
 
-Si deseas clonar y ejecutar la estructura de este proyecto en tu entorno local, sigue estos pasos:
+## Guía de Instalación
 
-### 1. Clonar e Instalar dependencias
+### 1. Clonar el repositorio
 ```bash
 git clone https://github.com/fressiarf/sistema-bancario-mvc.git
-cd sistema-bancario-mvc/back_end
+cd sistema-bancario-mvc
+```
+
+### 2. Configuración del Backend
+```bash
+cd back_end
 npm install
 ```
+Configura tu archivo `.env` basándote en `.env.example` (o crea uno con los parámetros de DB y JWT).
 
-### 2. Configurar Variables de Entorno
-Crea un archivo `.env` en la carpeta `back_end/` basándote en la siguiente estructura:
-```env
-PORT=3000
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=sistema_bancario_mvc
-DB_USER=tu_usuario_mysql
-DB_PASSWORD=tu_password_mysql
-NODE_ENV=development
-
-# Configuración de Seguridad JWT
-JWT_SECRET=tu_clave_secreta_super_segura
-JWT_EXPIRES_IN=1h
-```
-
-### 3. Ejecutar Migraciones
-Una vez configurada tu base de datos local, ejecuta el siguiente comando para generar todas las tablas y relaciones automáticamente:
+Ejecuta las migraciones:
 ```bash
 npm run migrate
 ```
-*(Nota: Puedes revisar el archivo `evidencia_migraciones.txt` para validar cómo se ve una ejecución exitosa de este comando).*
+
+### 3. Configuración del Frontend
+```bash
+cd ../front_end
+npm install
+npm run dev
+```
+
+---
+
+## Evidencias de Desarrollo
+
+Puedes revisar el archivo [**evidencia_migraciones.txt**](./back_end/evidencia_migraciones.txt) para validar la correcta ejecución del esquema de base de datos y la carga de los modelos de seguridad.
+
+---
 
 ## Tecnologías Utilizadas
-* **Entorno:** Node.js (Express)
-* **Seguridad:** JSON Web Tokens (JWT) & Bcryptjs
-* **Base de Datos:** MySQL
-* **ORM:** Sequelize & Sequelize-CLI
+| Capa | Tecnologías |
+| :--- | :--- |
+| **Backend** | Node.js, Express, Sequelize, MySQL |
+| **Frontend** | React, Vite, CSS Vanilla |
+| **Seguridad** | JWT, Bcryptjs |
+| **Herramientas** | Postman, Sequelize-CLI |
+
+---
+*Desarrollado por [fressiarf](https://github.com/fressiarf)*
