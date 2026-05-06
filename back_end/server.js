@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Rutas principales
-app.use('/', routes);
+app.use('/api', routes);
 
 // Endpoint de bienvenida
 app.get('/', (req, res) => {
@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   await connectDB(); // Verifica la conexión a la BD (termina el proceso si falla)
   app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en http://localhost:${PORT}/api`);
   });
 };
 
