@@ -47,22 +47,36 @@ const usuarioController = {
     try {
       const { contrasenia, ...userData } = req.body;
       
-      // RESTRICCIÓN ROL EMPLEADO: Solo puede crear clientes
+      // LOGICA DE JERARQUÍA DE ROLES
       const rolSolicitante = await req.usuario.getRol();
-      
-      if (['Empleado', 'empleado'].includes(rolSolicitante.nombre)) {
-        // Buscar el ID del rol Cliente
-        const rolCliente = await Rol.findOne({ where: { nombre: ['Cliente', 'cliente'] } });
-        
-        // Si el empleado intenta asignar un rol que no sea cliente, lo bloqueamos
-        if (userData.rol_id && userData.rol_id != rolCliente.id) {
-          return res.status(403).json({ 
-            message: 'Como empleado, solo tienes permitido crear usuarios con el rol de Cliente.' 
-          });
+      const nombreRolSolicitante = rolSolicitante.nombre.toLowerCase();
+
+      // Si no es SuperAdmin, aplicamos restricciones
+      if (nombreRolSolicitante !== 'superadmin' && rolSolicitante.id !== 4) {
+        const rolesExistentes = await Rol.findAll();
+        const rolDestino = rolesExistentes.find(r => r.id === userData.rol_id);
+        const nombreRolDestino = rolDestino?.nombre.toLowerCase() || '';
+
+        // Restricción para Administrador
+        if (nombreRolSolicitante.includes('admin')) {
+          if (nombreRolDestino === 'superadmin') {
+            return res.status(403).json({ 
+              message: 'Un Administrador no puede crear un SuperAdmin.' 
+            });
+          }
         }
         
-        // Forzamos que sea cliente si no envió rol_id
-        userData.rol_id = rolCliente.id;
+        // Restricción para Empleado
+        if (nombreRolSolicitante.includes('empleado')) {
+          const rolCliente = rolesExistentes.find(r => r.nombre.toLowerCase().includes('cliente'));
+          
+          if (userData.rol_id && userData.rol_id != rolCliente.id) {
+            return res.status(403).json({ 
+              message: 'Como empleado, solo tienes permitido crear usuarios con el rol de Cliente.' 
+            });
+          }
+          userData.rol_id = rolCliente.id;
+        }
       }
 
       const salt = await bcrypt.genSalt(10);

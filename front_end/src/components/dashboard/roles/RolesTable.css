@@ -9,9 +9,13 @@
 }
 
 .rol-form {
+    margin-bottom: 30px;
+}
+
+.form-group-rol {
     display: flex;
     gap: 15px;
-    margin-bottom: 30px;
+    width: 100%;
 }
 
 .rol-input {

@@ -7,18 +7,26 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const { user, logoutUser } = useAuth();
     
-    const esAdmin = ['Administrador', 'administrador', 'admin'].includes(user?.rol?.nombre);
+    const nombreRol = user?.rol?.nombre?.toLowerCase() || '';
+    const esAdmin = nombreRol.includes('admin') || nombreRol === 'superadmin';
+    const esSuperAdmin = nombreRol === 'superadmin';
 
     const handleLogout = () => {
         logoutUser();
         navigate("/login");
     };
 
+    const getPortalName = () => {
+        if (esSuperAdmin) return 'Portal SuperAdmin';
+        if (esAdmin) return 'Portal Admin';
+        return 'Portal Empleado';
+    };
+
     return (
         <aside className="sidebar">
             <div className="sidebar-header">
                 <div className="bcr-logo-small">BN</div>
-                <span>{esAdmin ? 'Portal Admin' : 'Portal Empleado'}</span>
+                <span>{getPortalName()}</span>
             </div>
             
             <nav className="sidebar-nav">

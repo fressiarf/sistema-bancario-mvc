@@ -5,7 +5,7 @@ import './RolesTable.css';
 
 const RolesTable = () => {
     const [roles, setRoles] = useState([]);
-    const [nuevoRol, setNuevoRol] = useState('');
+    const [nuevoRol, setNuevoRol] = useState({ nombre: '', descripcion: '' });
     const [error, setError] = useState('');
     const [cargando, setCargando] = useState(true);
 
@@ -28,12 +28,12 @@ const RolesTable = () => {
 
     const handleCrearRol = async (e) => {
         e.preventDefault();
-        if (!nuevoRol.trim()) return;
+        if (!nuevoRol.nombre.trim()) return;
 
         try {
-            const data = await postRol({ nombre: nuevoRol });
+            const data = await postRol(nuevoRol);
             if (data && data.id) {
-                setNuevoRol('');
+                setNuevoRol({ nombre: '', descripcion: '' });
                 cargarRoles();
             } else {
                 setError(data.message || 'Error al crear rol');
@@ -60,14 +60,23 @@ const RolesTable = () => {
             {error && <div className="error-msg">{error}</div>}
 
             <form onSubmit={handleCrearRol} className="rol-form">
-                <input 
-                    type="text" 
-                    placeholder="Nombre del nuevo rol..." 
-                    value={nuevoRol}
-                    onChange={(e) => setNuevoRol(e.target.value)}
-                    className="rol-input"
-                />
-                <button type="submit" className="rol-btn-add">Crear Rol</button>
+                <div className="form-group-rol">
+                    <input 
+                        type="text" 
+                        placeholder="Nombre del nuevo rol..." 
+                        value={nuevoRol.nombre}
+                        onChange={(e) => setNuevoRol({ ...nuevoRol, nombre: e.target.value })}
+                        className="rol-input"
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Descripción del rol..." 
+                        value={nuevoRol.descripcion}
+                        onChange={(e) => setNuevoRol({ ...nuevoRol, descripcion: e.target.value })}
+                        className="rol-input"
+                    />
+                    <button type="submit" className="rol-btn-add">Crear Rol</button>
+                </div>
             </form>
 
             <div className="table-responsive">
@@ -76,6 +85,7 @@ const RolesTable = () => {
                         <tr>
                             <th>ID</th>
                             <th>Nombre del Rol</th>
+                            <th>Descripción</th>
                             <th>Fecha Creación</th>
                         </tr>
                     </thead>
@@ -88,6 +98,7 @@ const RolesTable = () => {
                                         {rol.nombre}
                                     </span>
                                 </td>
+                                <td>{rol.descripcion || 'Sin descripción'}</td>
                                 <td>{new Date(rol.createdAt).toLocaleDateString()}</td>
                             </tr>
                         ))}

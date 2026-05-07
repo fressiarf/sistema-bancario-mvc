@@ -36,8 +36,9 @@ const Dashboard = () => {
         },
     ];
 
-    // Verificar si es administrador
-    const esAdmin = user?.rol?.nombre?.toLowerCase().includes('admin');
+    // Verificar si es administrador o superadmin
+    const nombreRol = user?.rol?.nombre?.toLowerCase() || '';
+    const esAdmin = nombreRol.includes('admin') || nombreRol === 'superadmin';
 
     return (
         <div className="dashboard-layout">

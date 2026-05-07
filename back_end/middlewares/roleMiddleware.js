@@ -2,8 +2,14 @@ const restringirA = (...rolesPermitidos) => {
   return async (req, res, next) => {
     try {
       const rol = await req.usuario.getRol();
+      const nombreRol = rol.nombre;
 
-      if (!rolesPermitidos.includes(rol.nombre)) {
+      // SuperAdmin (ID 4) tiene acceso total a todo
+      if (rol.id === 4 || nombreRol === 'SuperAdmin') {
+        return next();
+      }
+
+      if (!rolesPermitidos.includes(nombreRol)) {
         return res.status(403).json({
           message: 'No tienes permisos para esta acción.',
         });

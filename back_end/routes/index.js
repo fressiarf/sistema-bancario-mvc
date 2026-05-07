@@ -23,10 +23,10 @@ router.use('/auth', authRoutes);
 // Middleware de autenticación global
 router.use(verificarToken);
 
-// Restricción global: Solo admin puede ejecutar DELETE
+// Restricción global: Solo SuperAdmin y Administrador pueden ejecutar DELETE
 router.use((req, res, next) => {
   if (req.method === 'DELETE') {
-    return restringirA('Administrador')(req, res, next);
+    return restringirA('SuperAdmin', 'Administrador', 'administrador', 'admin')(req, res, next);
   }
   next();
 });
