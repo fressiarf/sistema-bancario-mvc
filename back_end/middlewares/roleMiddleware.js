@@ -4,8 +4,8 @@ const restringirA = (...rolesPermitidos) => {
       const rol = await req.usuario.getRol();
       const nombreRol = rol.nombre;
 
-      // SuperAdmin (ID 4) tiene acceso total a todo
-      if (rol.id === 4 || nombreRol === 'SuperAdmin') {
+      // SuperAdministrador (ID 5) tiene acceso total a todo
+      if (rol.id === 5 || nombreRol === 'SuperAdministrador') {
         return next();
       }
 

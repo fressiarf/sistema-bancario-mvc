@@ -23,8 +23,8 @@ const Navbar = () => {
                 </div>
                 <div className="user-profile">
                     <div className="user-info">
-                        <span className="user-name">{user?.nombre_completo || "Administrador"}</span>
-                        <span className="user-role">Acceso Administrativo</span>
+                        <span className="user-name">{user?.nombre_completo || "Usuario"}</span>
+                        <span className="user-role">{user?.rol?.nombre || "Acceso"}</span>
                     </div>
                     <div className="user-avatar">
                         {inicial}

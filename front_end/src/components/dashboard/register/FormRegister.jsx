@@ -12,14 +12,15 @@ const FormRegister = () => {
     const [roles, setRoles] = useState([]);
     
     const nombreRolUser = user?.rol?.nombre?.toLowerCase() || '';
-    const esAdmin = nombreRolUser.includes('admin') || nombreRolUser === 'superadmin';
-    const esSuperAdmin = nombreRolUser === 'superadmin';
+    const rolIdUser = user?.rol_id;
+    const esAdmin = nombreRolUser.includes('admin') || nombreRolUser === 'superadministrador' || rolIdUser === 5;
+    const esSuperAdmin = nombreRolUser === 'superadministrador' || rolIdUser === 5;
 
     // Filtrar roles según jerarquía
     const filteredRoles = roles.filter(rol => {
         const nombreR = rol.nombre.toLowerCase();
         if (esSuperAdmin) return true; // SuperAdmin ve todo
-        if (esAdmin) return nombreR !== 'superadmin'; // Admin no ve SuperAdmin
+        if (esAdmin) return !nombreR.includes('admin') && !nombreR.includes('super'); // Admin no ve ni Admin ni SuperAdmin
         return false; // Otros no deberían ver el selector (protegido por esAdmin en el render)
     });
 
@@ -110,8 +111,8 @@ const FormRegister = () => {
             <div className="register-left">
                 <div className="bcr-logo-mock">BN</div>
                 <div className="welcome-text">
-                    <h3>Portal de Gestión</h3>
-                    <p>Habilitación de nuevos perfiles en la plataforma bancaria central.</p>
+                    <h3>Portal de {esSuperAdmin ? 'Super Control' : 'Gestión'}</h3>
+                    <p>{esSuperAdmin ? 'Administración total de la infraestructura bancaria.' : 'Habilitación de nuevos perfiles en la plataforma bancaria central.'}</p>
                 </div>
             </div>
             <div className="register-right">
@@ -125,7 +126,7 @@ const FormRegister = () => {
                         </button>
                     </div>
                     
-                    <h2>{formData.rol_id === roles.find(r => r.nombre.toLowerCase() === 'empleado')?.id ? "Registro de Empleado" : "Registro de Usuario"}</h2>
+                    <h2>Registro de {roles.find(r => r.id === formData.rol_id)?.nombre || "Usuario"}</h2>
                     
                     <form onSubmit={handleSubmit}>
                         {step === 1 && (

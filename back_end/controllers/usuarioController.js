@@ -17,9 +17,37 @@ const usuarioController = {
 
   findAll: async (req, res) => {
     try {
+      const rolSolicitante = await req.usuario.getRol();
+      const nombreRolSolicitante = rolSolicitante.nombre.toLowerCase();
+      const rolIdSolicitante = rolSolicitante.id;
+
+      let whereCondition = {};
+
+      // Jerarquía de visualización
+      if (rolIdSolicitante === 5 || nombreRolSolicitante === 'superadministrador') {
+        // SuperAdmin ve todo, no hay condición adicional
+      } else if (nombreRolSolicitante.includes('admin')) {
+        // Admin ve Empleados (3) y Clientes (2)
+        // No incluimos IDs fijos directamente si podemos evitarlo, mejor por nombre
+        const rolesPermitidos = await Rol.findAll({
+          where: { nombre: ['Empleado', 'empleado', 'Cliente', 'cliente'] }
+        });
+        whereCondition.rol_id = rolesPermitidos.map(r => r.id);
+      } else if (nombreRolSolicitante.includes('empleado')) {
+        // Empleado ve solo Clientes (2)
+        const rolCliente = await Rol.findOne({
+          where: { nombre: ['Cliente', 'cliente'] }
+        });
+        whereCondition.rol_id = rolCliente ? rolCliente.id : -1;
+      } else {
+        // Otros roles no deberían ver la lista o solo a sí mismos
+        whereCondition.id = req.usuario.id;
+      }
+
       const usuarios = await Usuario.findAll({
+        where: whereCondition,
         attributes: { exclude: ['contrasenia_hash'] },
-        include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
+        include: [{ model: Rol, as: 'rol', attributes: ['nombre', 'id'] }]
       });
       res.status(200).json(usuarios);
     } catch (error) {
@@ -52,16 +80,16 @@ const usuarioController = {
       const nombreRolSolicitante = rolSolicitante.nombre.toLowerCase();
 
       // Si no es SuperAdmin, aplicamos restricciones
-      if (nombreRolSolicitante !== 'superadmin' && rolSolicitante.id !== 4) {
+      if (nombreRolSolicitante !== 'superadministrador' && rolSolicitante.id !== 5) {
         const rolesExistentes = await Rol.findAll();
         const rolDestino = rolesExistentes.find(r => r.id === userData.rol_id);
         const nombreRolDestino = rolDestino?.nombre.toLowerCase() || '';
 
         // Restricción para Administrador
         if (nombreRolSolicitante.includes('admin')) {
-          if (nombreRolDestino === 'superadmin') {
+          if (nombreRolDestino.includes('admin') || nombreRolDestino === 'superadministrador') {
             return res.status(403).json({ 
-              message: 'Un Administrador no puede crear un SuperAdmin.' 
+              message: 'Un Administrador no tiene permisos para crear usuarios de nivel administrativo.' 
             });
           }
         }

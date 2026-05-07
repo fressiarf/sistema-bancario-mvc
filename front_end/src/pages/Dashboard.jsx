@@ -1,7 +1,6 @@
 import React from "react";
 import Sidebar from "../components/dashboard/sidebar/Sidebar";
 import Navbar from "../components/dashboard/navbar/Navbar";
-import RolesTable from "../components/dashboard/roles/RolesTable";
 import { useAuth } from "../context/AuthContext";
 import "./Dashboard.css";
 
@@ -36,9 +35,11 @@ const Dashboard = () => {
         },
     ];
 
-    // Verificar si es administrador o superadmin
+    // Verificar si es administrador o superadmin (ID 5)
     const nombreRol = user?.rol?.nombre?.toLowerCase() || '';
-    const esAdmin = nombreRol.includes('admin') || nombreRol === 'superadmin';
+    const rolId = user?.rol_id;
+    const esAdmin = rolId === 5 || nombreRol.includes('admin') || nombreRol === 'superadministrador';
+    const esSuperAdmin = rolId === 5 || nombreRol === 'superadministrador';
 
     return (
         <div className="dashboard-layout">
@@ -85,9 +86,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Solo el Administrador puede gestionar roles */}
-                        {esAdmin && <RolesTable />}
                     </section>
                 </main>
             </div>

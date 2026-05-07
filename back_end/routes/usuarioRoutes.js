@@ -3,8 +3,8 @@ const router = express.Router();
 const usuarioController = require('../controllers/usuarioController');
 const { restringirA } = require('../middlewares/roleMiddleware');
 
-const soloAdmin = restringirA('Administrador', 'administrador', 'admin', 'SuperAdmin');
-const adminYEmpleado = restringirA('Administrador', 'administrador', 'admin', 'Empleado', 'empleado', 'SuperAdmin');
+const soloAdmin = restringirA('Administrador', 'administrador', 'admin', 'SuperAdministrador');
+const adminYEmpleado = restringirA('Administrador', 'administrador', 'admin', 'Empleado', 'empleado', 'SuperAdministrador');
 
 // Cualquier autenticado puede ver su propio perfil
 router.get('/mi-perfil', usuarioController.miPerfil);

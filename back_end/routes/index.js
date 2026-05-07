@@ -26,7 +26,7 @@ router.use(verificarToken);
 // Restricción global: Solo SuperAdmin y Administrador pueden ejecutar DELETE
 router.use((req, res, next) => {
   if (req.method === 'DELETE') {
-    return restringirA('SuperAdmin', 'Administrador', 'administrador', 'admin')(req, res, next);
+    return restringirA('SuperAdministrador', 'Administrador', 'administrador', 'admin')(req, res, next);
   }
   next();
 });

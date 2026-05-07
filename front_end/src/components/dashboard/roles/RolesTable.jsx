@@ -18,10 +18,13 @@ const RolesTable = () => {
             const data = await getRoles();
             if (Array.isArray(data)) {
                 setRoles(data);
+                setError('');
+            } else {
+                setError(data?.message || 'No se pudieron cargar los roles');
             }
             setCargando(false);
         } catch (err) {
-            setError('Error al cargar roles');
+            setError('Error en la conexión con el servidor');
             setCargando(false);
         }
     };

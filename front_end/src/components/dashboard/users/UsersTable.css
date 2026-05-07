@@ -1,0 +1,93 @@
+
+.users-container {
+    background: #fff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #eef0f2;
+    margin-top: 30px;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.users-table th {
+    text-align: left;
+    padding: 15px;
+    border-bottom: 2px solid #f0f2f5;
+    color: #999;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.users-table td {
+    padding: 15px;
+    border-bottom: 1px solid #f8fafc;
+    font-size: 14px;
+    color: #444;
+}
+
+.user-name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.self-tag {
+    font-size: 10px;
+    color: #999;
+    font-style: italic;
+}
+
+.status-tag {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.status-tag.activo {
+    background: #ecfdf5;
+    color: #10b981;
+}
+
+.status-tag.inactivo, .status-tag.bloqueado {
+    background: #fef2f2;
+    color: #ef4444;
+}
+
+.role-select-mini {
+    padding: 6px 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 12px;
+    background: #f8fafc;
+    cursor: pointer;
+    outline: none;
+}
+
+.role-select-mini:focus {
+    border-color: #00A3E0;
+}
+
+.success-msg {
+    background: #ecfdf5;
+    color: #10b981;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    border-left: 4px solid #10b981;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-style: italic;
+}
