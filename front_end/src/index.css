@@ -1,12 +1,12 @@
 :root {
   --text: #4b5563;
-  --text-h: #002B7F; /* BCR Dark Blue */
+  --text-h: #002B7F; /* Original Blue */
   --bg: #FFFFFF;
   --border: #e5e7eb;
-  --code-bg: #F4F4F4; /* BCR Neutral Light */
-  --accent: #002B7F; /* Primary BCR Blue */
-  --accent-secondary: #00A3E0; /* BCR Light Blue */
-  --accent-red: #CE1126; /* BCR Red */
+  --code-bg: #F4F4F4;
+  --accent: #002B7F; 
+  --accent-secondary: #00A3E0; 
+  --accent-red: #CE1126; 
   --accent-bg: rgba(0, 43, 127, 0.05);
   --accent-border: rgba(0, 43, 127, 0.2);
   --social-bg: rgba(244, 244, 244, 0.5);

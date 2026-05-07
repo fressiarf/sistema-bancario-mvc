@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import Swal from 'sweetalert2';
 import "./Sidebar.css";
 
 const Sidebar = () => {
@@ -14,8 +15,28 @@ const Sidebar = () => {
     const esAdmin = esSuperAdmin || nombreRol.includes('admin');
 
     const handleLogout = () => {
-        logoutUser();
-        navigate("/login");
+        Swal.fire({
+            title: '¿Finalizar sesión?',
+            text: "Se cerrará el acceso a las herramientas administrativas.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#002B7F',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, salir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                logoutUser();
+                navigate("/");
+                Swal.fire({
+                    title: '¡Hasta pronto!',
+                    text: 'Sesión cerrada correctamente.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
+        });
     };
 
     const getPortalName = () => {
@@ -34,9 +55,15 @@ const Sidebar = () => {
             <nav className="sidebar-nav">
                 <ul>
                     <li className="nav-header">Principal</li>
+                    <li className="nav-item">
+                        <Link to="/">
+                            <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            Página Principal
+                        </Link>
+                    </li>
                     <li className="nav-item active">
                         <Link to="/dashboard">
-                            <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                             Consola Dashboard
                         </Link>
                     </li>
@@ -50,15 +77,15 @@ const Sidebar = () => {
                     </li>
                     
                     <li className="nav-item">
-                        <Link to="/users-management">
+                        <Link to="/users">
                             <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                             Lista de Usuarios
                         </Link>
                     </li>
-
+                    
                     {esSuperAdmin && (
                         <li className="nav-item">
-                            <Link to="/roles-management">
+                            <Link to="/roles">
                                 <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                                 Gestión de Roles
                             </Link>

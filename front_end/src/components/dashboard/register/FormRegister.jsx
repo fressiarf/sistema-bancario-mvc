@@ -181,7 +181,7 @@ const FormRegister = () => {
                                     <input
                                         type="email"
                                         name="email"
-                                        placeholder="usuario@bcr.com"
+                                        placeholder="usuario@bncr.fi.cr"
                                         value={formData.email}
                                         onChange={handleChange}
                                         required

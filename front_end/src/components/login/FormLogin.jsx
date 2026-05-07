@@ -27,9 +27,9 @@ const FormLogin = () => {
             if (result) {
                 loginUser(result.usuario);
                 setMensaje("¡Bienvenido!");
-                // Redirigir al dashboard después de un breve delay
+                // Redirigir al home después de un breve delay
                 setTimeout(() => {
-                    navigate("/dashboard");
+                    navigate("/");
                 }, 1000);
             }
         } catch (error) {
