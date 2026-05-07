@@ -3,7 +3,6 @@ import React from 'react';
 import Sidebar from '../components/dashboard/sidebar/Sidebar';
 import Navbar from '../components/dashboard/navbar/Navbar';
 import UsersTable from '../components/dashboard/users/UsersTable';
-import './Dashboard.css';
 
 const UsersManagement = () => {
     return (

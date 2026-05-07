@@ -3,7 +3,6 @@ import React from 'react';
 import Sidebar from '../components/dashboard/sidebar/Sidebar';
 import Navbar from '../components/dashboard/navbar/Navbar';
 import RolesTable from '../components/dashboard/roles/RolesTable';
-import './Dashboard.css';
 
 const RolesManagement = () => {
     return (
