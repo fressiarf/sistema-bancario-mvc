@@ -58,6 +58,24 @@ npm run dev
 
 ---
 
+## Pruebas Automatizadas
+
+El sistema cuenta con una suite de pruebas para garantizar la integridad de las operaciones bancarias y la seguridad.
+
+### Ejecutar Pruebas
+```bash
+cd back_end
+npm test
+```
+
+### Cobertura de Pruebas
+* **Autenticación**: Validación de login y gestión de errores de credenciales.
+* **Seguridad (RBAC)**: Verificación de permisos según roles (Administrador vs. Empleado).
+* **Reglas de Negocio**: Simulación de transferencias bancarias, validación de saldos y límites.
+* **Integridad**: Pruebas de salud de la API (API Health Checks).
+
+---
+
 ## Evidencias de Desarrollo
 
 Puedes revisar el archivo [**evidencia_migraciones.txt**](./back_end/evidencia_migraciones.txt) para validar la correcta ejecución del esquema de base de datos y la carga de los modelos de seguridad.

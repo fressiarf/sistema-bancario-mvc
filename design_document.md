@@ -58,6 +58,18 @@ El diseño de la base de datos se rige por fuertes restricciones de claves forá
 *   **Cifrado Bcrypt**: Hash de contraseñas con factor de costo 10.
 *   **Control de Acceso (RBAC)**: Middlewares que restringen el acceso a rutas según el rol extraído del token.
 *   **Protección de Métodos**: Restricción del método `DELETE` exclusivamente para administradores.
+*   **Transacciones Atómicas**: Uso de transacciones SQL para asegurar que las operaciones financieras se completen íntegramente o se reviertan totalmente en caso de error.
+
+---
+
+### 6. Arquitectura de Pruebas (Test Automation)
+
+El sistema implementa una infraestructura de pruebas robusta basada en Jest y Supertest:
+
+*   **Aislamiento de la Aplicación**: Separación de la lógica de Express (`index.js`) del punto de entrada del servidor (`server.js`). Esto permite a Jest instanciar la aplicación en memoria para pruebas sin ocupar puertos de red reales.
+*   **Base de Datos de Pruebas**: Uso de un entorno de base de datos dedicado (`test`) para evitar la contaminación de datos de desarrollo o producción.
+*   **Pruebas de Integración**: Simulación de peticiones HTTP completas para validar el flujo desde la ruta hasta la base de datos, incluyendo la ejecución de middlewares.
+*   **Limpieza Automatizada**: Hooks de ciclo de vida (`beforeAll`, `afterAll`) que preparan el escenario y limpian la base de datos después de cada suite de pruebas.
 
 ---
 

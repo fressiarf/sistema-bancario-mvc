@@ -42,3 +42,19 @@ Atributos críticos detectados:
 ---
 CONCLUSIÓN: La infraestructura de base de datos para la Fase 2 ha sido desplegada con éxito.
 ======================================================
+
+5. RESULTADO DE PRUEBAS AUTOMATIZADAS (npm test)
+------------------------------------------------------
+Test Suites: 4 passed, 4 total
+Tests:       10 passed, 10 total
+Snapshots:   0 total
+Time:        2.264 s
+Ran all test suites.
+
+SUITES EJECUTADAS:
+- tests/auth.test.js: Validación de autenticación y seguridad.
+- tests/roles.test.js: Validación de permisos por rol (RBAC).
+- tests/transacciones.test.js: Validación de integridad financiera.
+- tests/api.test.js: Validación de disponibilidad de servicios.
+
+======================================================
