@@ -5,10 +5,8 @@ const { restringirA } = require('../middlewares/roleMiddleware');
 
 const soloAdmin = restringirA('Administrador', 'administrador', 'admin');
 
-// Ruta para que el usuario vea sus propias cuentas
 router.get('/mis-cuentas', cuentaController.misCuentas);
 
-// CRUD completo solo para admin
 router.get('/', soloAdmin, cuentaController.findAll);
 router.get('/:id', soloAdmin, cuentaController.findByPk);
 router.post('/', soloAdmin, cuentaController.create);

@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Sesion extends Model {
-    /**
-     * Cada sesión pertenece a un usuario específico.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       Sesion.belongsTo(models.Usuario, {
         foreignKey: 'usuario_id',

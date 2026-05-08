@@ -1,7 +1,7 @@
 const { Cuenta, Usuario, TipoCuenta, Moneda, Sucursal } = require('../models');
 
 const cuentaController = {
-  // El usuario autenticado ve solo sus propias cuentas
+
   misCuentas: async (req, res) => {
     try {
       const cuentas = await Cuenta.findAll({

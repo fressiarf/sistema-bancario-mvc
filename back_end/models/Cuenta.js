@@ -4,43 +4,34 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Cuenta extends Model {
-    /**
-     * Asociaciones del modelo Cuenta.
-     * Punto central del sistema: conecta con usuarios, catálogos y transacciones.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
-      // Propietario de la cuenta (N:1)
+
       Cuenta.belongsTo(models.Usuario, {
         foreignKey: 'usuario_id',
         as: 'propietario',
       });
 
-      // Tipo de producto financiero (N:1)
       Cuenta.belongsTo(models.TipoCuenta, {
         foreignKey: 'tipo_cuenta_id',
         as: 'tipoCuenta',
       });
 
-      // Divisa en la que está denominada (N:1)
       Cuenta.belongsTo(models.Moneda, {
         foreignKey: 'moneda_id',
         as: 'moneda',
       });
 
-      // Sucursal donde fue aperturada (N:1)
       Cuenta.belongsTo(models.Sucursal, {
         foreignKey: 'sucursal_id',
         as: 'sucursal',
       });
 
-      // Transacciones donde esta cuenta es el ORIGEN del débito (1:N)
       Cuenta.hasMany(models.Transaccion, {
         foreignKey: 'cuenta_origen_id',
         as: 'transaccionesOrigen',
       });
 
-      // Transacciones donde esta cuenta es el DESTINO del crédito (1:N)
       Cuenta.hasMany(models.Transaccion, {
         foreignKey: 'cuenta_destino_id',
         as: 'transaccionesDestino',

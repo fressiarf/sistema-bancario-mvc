@@ -5,7 +5,6 @@ const { restringirA } = require('../middlewares/roleMiddleware');
 
 const soloAdmin = restringirA('Administrador', 'administrador', 'admin');
 
-// Solo admin puede ver y gestionar logs de auditoría
 router.use(soloAdmin);
 
 router.get('/', logAccesoController.findAll);

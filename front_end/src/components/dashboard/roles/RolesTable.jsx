@@ -64,16 +64,16 @@ const RolesTable = () => {
 
             <form onSubmit={handleCrearRol} className="rol-form">
                 <div className="form-group-rol">
-                    <input 
-                        type="text" 
-                        placeholder="Nombre del nuevo rol..." 
+                    <input
+                        type="text"
+                        placeholder="Nombre del nuevo rol..."
                         value={nuevoRol.nombre}
                         onChange={(e) => setNuevoRol({ ...nuevoRol, nombre: e.target.value })}
                         className="rol-input"
                     />
-                    <input 
-                        type="text" 
-                        placeholder="Descripción del rol..." 
+                    <input
+                        type="text"
+                        placeholder="Descripción del rol..."
                         value={nuevoRol.descripcion}
                         onChange={(e) => setNuevoRol({ ...nuevoRol, descripcion: e.target.value })}
                         className="rol-input"

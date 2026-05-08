@@ -1,7 +1,7 @@
 .sidebar {
     width: 260px;
     height: 100vh;
-    background: #002B7F; /* Azul BCR */
+    background: #002B7F;
     color: #fff;
     display: flex;
     flex-direction: column;
@@ -79,7 +79,7 @@
 .nav-item a:hover, .nav-item.active a {
     color: #fff;
     background: rgba(255,255,255,0.1);
-    border-left: 4px solid #00A3E0; /* Celeste BCR */
+    border-left: 4px solid #00A3E0;
 }
 
 .nav-item .icon {

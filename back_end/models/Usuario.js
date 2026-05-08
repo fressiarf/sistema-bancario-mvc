@@ -4,37 +4,29 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Usuario extends Model {
-    /**
-     * Asociaciones del modelo Usuario.
-     * Un usuario pertenece a un rol y puede tener cuentas, sesiones y logs.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
-      // Pertenece a un rol (N:1)
+
       Usuario.belongsTo(models.Rol, {
         foreignKey: 'rol_id',
         as: 'rol',
       });
 
-      // Tiene múltiples cuentas bancarias (1:N)
       Usuario.hasMany(models.Cuenta, {
         foreignKey: 'usuario_id',
         as: 'cuentas',
       });
 
-      // Tiene múltiples sesiones activas (1:N, multi-dispositivo)
       Usuario.hasMany(models.Sesion, {
         foreignKey: 'usuario_id',
         as: 'sesiones',
       });
 
-      // Registro de auditoría: eventos de acceso (1:N)
       Usuario.hasMany(models.LogAcceso, {
         foreignKey: 'usuario_id',
         as: 'logs',
       });
 
-      // Transacciones que este usuario ha aprobado como supervisor (1:N)
       Usuario.hasMany(models.Transaccion, {
         foreignKey: 'aprobado_por',
         as: 'transaccionesAprobadas',
@@ -105,7 +97,7 @@ module.exports = (sequelize) => {
       contrasenia_hash: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        // SEGURIDAD: Este campo se excluye de toJSON() y nunca debe retornarse en la API
+
         validate: {
           notEmpty: { msg: 'La contraseña no puede estar vacía.' },
         },
@@ -141,16 +133,16 @@ module.exports = (sequelize) => {
       tableName: 'usuarios',
       timestamps: true,
       freezeTableName: true,
-      // Excluye contrasenia_hash de cualquier consulta con defaultScope
+
       defaultScope: {
         attributes: {
           exclude: ['contrasenia_hash'],
         },
       },
-      // Scope especial para cuando sí se necesita la contraseña (ej. login)
+
       scopes: {
         conContrasenia: {
-          attributes: {}, // Incluye todos los campos, sin exclusión
+          attributes: {},
         },
       },
     }

@@ -5,7 +5,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
-    // Intentar recuperar el usuario de localStorage al cargar (opcional, si no confías solo en cookies)
     useEffect(() => {
         const savedUser = localStorage.getItem('user');
         if (savedUser) {
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const logoutUser = () => {
         setUser(null);
         localStorage.removeItem('user');
-        // Aquí podrías también llamar a un servicio para limpiar las cookies
+
     };
 
     return (

@@ -27,7 +27,7 @@ const FormLogin = () => {
             if (result) {
                 loginUser(result.usuario);
                 setMensaje("¡Bienvenido!");
-                // Redirigir al home después de un breve delay
+
                 setTimeout(() => {
                     navigate("/");
                 }, 1000);

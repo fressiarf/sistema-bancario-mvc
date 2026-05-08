@@ -4,11 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class LogAcceso extends Model {
-    /**
-     * Cada log puede estar asociado a un usuario (nullable para intentos fallidos).
-     * IMPORTANTE: Esta tabla es append-only. Nunca debe actualizarse ni eliminarse.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       LogAcceso.belongsTo(models.Usuario, {
         foreignKey: 'usuario_id',
@@ -26,7 +22,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       usuario_id: {
-        // Nullable: permite registrar intentos de acceso con credenciales inválidas
+
         type: DataTypes.INTEGER,
         allowNull: true,
       },

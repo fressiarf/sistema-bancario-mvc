@@ -7,10 +7,10 @@ import "./Sidebar.css";
 const Sidebar = () => {
     const navigate = useNavigate();
     const { user, logoutUser } = useAuth();
-    
+
     const nombreRol = user?.rol?.nombre?.toLowerCase() || '';
     const rolId = user?.rol_id;
-    
+
     const esSuperAdmin = rolId === 5 || nombreRol === 'superadministrador';
     const esAdmin = esSuperAdmin || nombreRol.includes('admin');
 
@@ -51,7 +51,7 @@ const Sidebar = () => {
                 <div className="bcr-logo-small">BN</div>
                 <span>{getPortalName()}</span>
             </div>
-            
+
             <nav className="sidebar-nav">
                 <ul>
                     <li className="nav-header">Principal</li>
@@ -75,14 +75,14 @@ const Sidebar = () => {
                             Registrar Nuevo
                         </Link>
                     </li>
-                    
+
                     <li className="nav-item">
                         <Link to="/users">
                             <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
                             Lista de Usuarios
                         </Link>
                     </li>
-                    
+
                     {esSuperAdmin && (
                         <li className="nav-item">
                             <Link to="/roles">

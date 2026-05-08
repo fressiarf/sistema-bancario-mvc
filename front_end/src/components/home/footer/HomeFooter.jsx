@@ -21,7 +21,7 @@ const HomeFooter = () => {
                             <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg></span>
                         </div>
                     </div>
-                    
+
                     <div className="footer-links">
                         <h4>Atención al Cliente</h4>
                         <ul>
@@ -49,7 +49,7 @@ const HomeFooter = () => {
                         <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16" style={{marginRight: '10px'}}><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> San José, Costa Rica</p>
                     </div>
                 </div>
-                
+
                 <div className="footer-bottom">
                     <p>&copy; 2024 Banco Nacional de Costa Rica. Todos los derechos reservados.</p>
                     <div className="bottom-links">

@@ -1,14 +1,13 @@
-require('dotenv').config(); // Carga las variables de entorno
+require('dotenv').config();
 
 const { connectDB } = require('./database');
-const app = require('./index'); // Importamos la aplicación configurada
+const app = require('./index');
 
 const PORT = process.env.PORT || 3000;
 
-// Inicialización del servidor
 const startServer = async () => {
   try {
-    await connectDB(); // Verifica la conexión a la BD
+    await connectDB();
     app.listen(PORT, () => {
       console.log(`Servidor corriendo en http://localhost:${PORT}`);
       console.log('Documentación de la API: /api');

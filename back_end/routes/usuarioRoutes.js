@@ -6,10 +6,8 @@ const { restringirA } = require('../middlewares/roleMiddleware');
 const soloAdmin = restringirA('Administrador', 'administrador', 'admin', 'SuperAdministrador');
 const adminYEmpleado = restringirA('Administrador', 'administrador', 'admin', 'Empleado', 'empleado', 'SuperAdministrador');
 
-// Cualquier autenticado puede ver su propio perfil
 router.get('/mi-perfil', usuarioController.miPerfil);
 
-// Solo admin puede gestionar usuarios
 router.get('/', soloAdmin, usuarioController.findAll);
 router.get('/:id', soloAdmin, usuarioController.findByPk);
 router.post('/', adminYEmpleado, usuarioController.create);

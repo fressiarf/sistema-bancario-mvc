@@ -1,12 +1,12 @@
 :root {
   --text: #4b5563;
-  --text-h: #002B7F; /* Original Blue */
+  --text-h: #002B7F;
   --bg: #FFFFFF;
   --border: #e5e7eb;
   --code-bg: #F4F4F4;
-  --accent: #002B7F; 
-  --accent-secondary: #00A3E0; 
-  --accent-red: #CE1126; 
+  --accent: #002B7F;
+  --accent-secondary: #00A3E0;
+  --accent-red: #CE1126;
   --accent-bg: rgba(0, 43, 127, 0.05);
   --accent-border: rgba(0, 43, 127, 0.2);
   --social-bg: rgba(244, 244, 244, 0.5);
@@ -30,7 +30,7 @@
 
 body {
   margin: 0;
-  background-color: #f0f2f5; /* Color plano gris claro profesional */
+  background-color: #f0f2f5;
   min-height: 100vh;
 }
 
@@ -87,7 +87,7 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
-/* Layout del Dashboard */
+
 .dashboard-layout {
     display: flex;
     background: #f0f2f5;
@@ -119,7 +119,6 @@ code {
     font-weight: 500;
 }
 
-/* Tarjetas de Estadísticas */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -179,7 +178,6 @@ code {
     opacity: 0.8;
 }
 
-/* Secciones y Actividad */
 .dashboard-sections {
     margin-top: 50px;
 }

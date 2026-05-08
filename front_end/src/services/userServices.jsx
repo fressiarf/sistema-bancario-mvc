@@ -16,9 +16,9 @@ export async function postUsuarios(usuario){
         const datosUsuarios= await respuesta.json();
 
         return datosUsuarios;
-        
+
     } catch (error) {
-        
+
         console.error("Error al obtener los usuarios", error);
     }
 }

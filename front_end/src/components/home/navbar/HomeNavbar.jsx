@@ -8,10 +8,10 @@ import './HomeNavbar.css';
 const HomeNavbar = () => {
     const { user, logoutUser } = useAuth();
     const navigate = useNavigate();
-    
+
     const nombreRol = user?.rol?.nombre?.toLowerCase() || '';
     const rolId = user?.rol_id;
-    // Empleado, Admin o SuperAdmin (ID 5)
+
     const puedeVerDashboard = rolId === 5 || nombreRol.includes('admin') || nombreRol.includes('empleado');
 
     const handleLogout = () => {
@@ -50,7 +50,7 @@ const HomeNavbar = () => {
                     <span className="logo-divider">|</span>
                     <span className="logo-sub">Más cerca de usted</span>
                 </div>
-                
+
                 <ul className="nav-links">
                     <li><Link to="/">Personas</Link></li>
                     <li><Link to="/">Empresas</Link></li>

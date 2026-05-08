@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Sucursal extends Model {
-    /**
-     * Una sucursal puede tener múltiples cuentas aperturadas en ella.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       Sucursal.hasMany(models.Cuenta, {
         foreignKey: 'sucursal_id',

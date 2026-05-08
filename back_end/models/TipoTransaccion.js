@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class TipoTransaccion extends Model {
-    /**
-     * Un tipo de transacción puede estar en múltiples transacciones.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       TipoTransaccion.hasMany(models.Transaccion, {
         foreignKey: 'tipo_transaccion_id',

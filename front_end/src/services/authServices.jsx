@@ -8,11 +8,11 @@ export async function login(credentials) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(credentials),
-            credentials: 'include' // IMPORTANTE para recibir la cookie del servidor
+            credentials: 'include'
         });
 
         const data = await response.json();
-        
+
         if (!response.ok) {
             throw new Error(data.message || 'Error en el login');
         }

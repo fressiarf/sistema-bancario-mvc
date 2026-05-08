@@ -17,13 +17,10 @@ const logAccesoRoutes = require('./logAccesoRoutes');
 const sesionRoutes = require('./sesionRoutes');
 const transaccionRoutes = require('./transaccionRoutes');
 
-// Rutas Públicas
 router.use('/auth', authRoutes);
 
-// Middleware de autenticación global
 router.use(verificarToken);
 
-// Restricción global: Solo SuperAdmin y Administrador pueden ejecutar DELETE
 router.use((req, res, next) => {
   if (req.method === 'DELETE') {
     return restringirA('SuperAdministrador', 'Administrador', 'administrador', 'admin')(req, res, next);
@@ -31,7 +28,6 @@ router.use((req, res, next) => {
   next();
 });
 
-// Rutas Privadas
 router.use('/roles', rolRoutes);
 router.use('/sucursales', sucursalRoutes);
 router.use('/monedas', monedaRoutes);

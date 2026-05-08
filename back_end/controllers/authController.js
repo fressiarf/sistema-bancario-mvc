@@ -19,13 +19,11 @@ const authController = {
         });
       }
 
-      // Buscar usuario incluyendo el hash de contraseña y el ROL
-      const usuario = await Usuario.unscoped().findOne({ 
+      const usuario = await Usuario.unscoped().findOne({
         where: { email },
         include: [{ model: Rol, as: 'rol', attributes: ['nombre'] }]
       });
 
-      // Validar existencia y contraseña
       if (!usuario || !(await bcrypt.compare(contrasenia, usuario.contrasenia_hash))) {
         if (usuario) {
           await LogAcceso.create({
@@ -39,7 +37,6 @@ const authController = {
         return res.status(401).json({ message: 'Credenciales incorrectas.' });
       }
 
-      // Validar estado de la cuenta
       if (usuario.estado !== 'activo') {
         await LogAcceso.create({
           usuario_id: usuario.id,
@@ -53,11 +50,10 @@ const authController = {
 
       const token = generarToken(usuario.id, usuario.rol_id);
 
-      // Enviar token en cookie
       res.cookie('token', token, {
-        httpOnly: true, // Protege contra XSS
-        secure: process.env.NODE_ENV === 'production', // Solo HTTPS en producción
-        maxAge: 8 * 60 * 60 * 1000 // 8 horas
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 8 * 60 * 60 * 1000
       });
 
       await LogAcceso.create({

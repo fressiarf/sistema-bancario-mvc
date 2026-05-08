@@ -3,8 +3,7 @@ import "./Navbar.css";
 
 const Navbar = () => {
     const { user } = useAuth();
-    
-    // Obtener inicial del nombre
+
     const inicial = user?.nombre_completo ? user.nombre_completo.charAt(0).toUpperCase() : "A";
 
     return (
@@ -12,7 +11,7 @@ const Navbar = () => {
             <div className="search-box">
                 <input type="text" placeholder="Buscar cliente, cuenta o transacción..." />
             </div>
-            
+
             <div className="navbar-actions">
                 <div className="notifications">
                     <span className="badge">3</span>

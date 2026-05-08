@@ -10,18 +10,17 @@ const FormRegister = () => {
     const { user } = useAuth();
     const [step, setStep] = useState(1);
     const [roles, setRoles] = useState([]);
-    
+
     const nombreRolUser = user?.rol?.nombre?.toLowerCase() || '';
     const rolIdUser = user?.rol_id;
     const esAdmin = nombreRolUser.includes('admin') || nombreRolUser === 'superadministrador' || rolIdUser === 5;
     const esSuperAdmin = nombreRolUser === 'superadministrador' || rolIdUser === 5;
 
-    // Filtrar roles según jerarquía
     const filteredRoles = roles.filter(rol => {
         const nombreR = rol.nombre.toLowerCase();
-        if (esSuperAdmin) return true; // SuperAdmin ve todo
-        if (esAdmin) return !nombreR.includes('admin') && !nombreR.includes('super'); // Admin no ve ni Admin ni SuperAdmin
-        return false; // Otros no deberían ver el selector (protegido por esAdmin en el render)
+        if (esSuperAdmin) return true;
+        if (esAdmin) return !nombreR.includes('admin') && !nombreR.includes('super');
+        return false;
     });
 
     const [formData, setFormData] = useState({
@@ -43,7 +42,7 @@ const FormRegister = () => {
                 const data = await getRoles();
                 if (Array.isArray(data)) {
                     setRoles(data);
-                    // Si el rol por defecto (2) no existe en la lista, poner el primero disponible
+
                     if (!data.find(r => r.id === 2) && data.length > 0) {
                         setFormData(prev => ({ ...prev, rol_id: data[0].id }));
                     }
@@ -65,7 +64,7 @@ const FormRegister = () => {
     const handleRoleChange = (e) => {
         const selectedRolId = parseInt(e.target.value);
         const selectedRol = roles.find(r => r.id === selectedRolId);
-        
+
         setFormData({
             ...formData,
             rol_id: selectedRolId,
@@ -78,8 +77,7 @@ const FormRegister = () => {
         e.preventDefault();
         try {
             const dataToSend = { ...formData };
-            
-            // Lógica basada en el nombre del rol en lugar de IDs fijos si es posible
+
             const selectedRol = roles.find(r => r.id === formData.rol_id);
             const nombreRol = selectedRol?.nombre.toLowerCase();
 
@@ -125,9 +123,9 @@ const FormRegister = () => {
                             Volver
                         </button>
                     </div>
-                    
+
                     <h2>Registro de {roles.find(r => r.id === formData.rol_id)?.nombre || "Usuario"}</h2>
-                    
+
                     <form onSubmit={handleSubmit}>
                         {step === 1 && (
                             <div className="step-container animate-field">

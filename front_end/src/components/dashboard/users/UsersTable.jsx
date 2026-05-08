@@ -45,12 +45,12 @@ const UsersTable = () => {
 
     const handleRoleChange = async (userId, newRolId) => {
         if (!esSuperAdmin) return;
-        
+
         try {
             const result = await putUsuarios(userId, { rol_id: newRolId });
             if (result) {
                 setMensaje('Rol actualizado correctamente');
-                fetchData(); // Recargar lista
+                fetchData();
                 setTimeout(() => setMensaje(''), 3000);
             }
         } catch (err) {
@@ -108,11 +108,11 @@ const UsersTable = () => {
                                 </td>
                                 {esSuperAdmin && (
                                     <td>
-                                        <select 
+                                        <select
                                             className="role-select-mini"
                                             value={u.rol_id}
                                             onChange={(e) => handleRoleChange(u.id, e.target.value)}
-                                            disabled={u.id === currentUser?.id} // No se puede cambiar el rol a sí mismo
+                                            disabled={u.id === currentUser?.id}
                                         >
                                             {roles.map(r => (
                                                 <option key={r.id} value={r.id}>{r.nombre}</option>

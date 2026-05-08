@@ -4,47 +4,34 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Transaccion extends Model {
-    /**
-     * Asociaciones del modelo Transaccion.
-     *
-     * Patrón especial: dos belongsTo hacia Cuenta (origen y destino)
-     * y uno hacia Usuario (aprobador). Se usan alias obligatorios
-     * ya que hay múltiples FK apuntando a la misma tabla.
-     *
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
-      // Tipo de operación realizada (N:1)
+
       Transaccion.belongsTo(models.TipoTransaccion, {
         foreignKey: 'tipo_transaccion_id',
         as: 'tipoTransaccion',
       });
 
-      // Cuenta debitada — puede ser NULL en depósitos directos (N:1)
       Transaccion.belongsTo(models.Cuenta, {
         foreignKey: 'cuenta_origen_id',
         as: 'cuentaOrigen',
       });
 
-      // Cuenta acreditada — puede ser NULL en retiros directos (N:1)
       Transaccion.belongsTo(models.Cuenta, {
         foreignKey: 'cuenta_destino_id',
         as: 'cuentaDestino',
       });
 
-      // Supervisor que autorizó la transacción — NULL si no requirió aprobación (N:1)
       Transaccion.belongsTo(models.Usuario, {
         foreignKey: 'aprobado_por',
         as: 'aprobador',
       });
 
-      // Auto-referencia: transacción original que esta revierte (N:1)
       Transaccion.belongsTo(models.Transaccion, {
         foreignKey: 'transaccion_origen_id',
         as: 'transaccionOrigen',
       });
 
-      // Inversamente: reversiones generadas por esta transacción (1:N)
       Transaccion.hasMany(models.Transaccion, {
         foreignKey: 'transaccion_origen_id',
         as: 'reversiones',
@@ -68,12 +55,12 @@ module.exports = (sequelize) => {
         },
       },
       cuenta_origen_id: {
-        // NULL válido: los depósitos directos no tienen cuenta de origen
+
         type: DataTypes.INTEGER,
         allowNull: true,
       },
       cuenta_destino_id: {
-        // NULL válido: los retiros directos no tienen cuenta de destino
+
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -100,7 +87,7 @@ module.exports = (sequelize) => {
         validate: {
           isDecimal: { msg: 'El monto total debe ser un número decimal.' },
           min: { args: [0.01], msg: 'El monto total debe ser mayor a 0.' },
-          // Valida que monto_total = monto + comision
+
           esSumaCorrecta(value) {
             const monto = parseFloat(this.monto) || 0;
             const comision = parseFloat(this.comision) || 0;
@@ -138,7 +125,7 @@ module.exports = (sequelize) => {
         },
       },
       aprobado_por: {
-        // NULL si la transacción no requirió aprobación de supervisor
+
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -150,7 +137,7 @@ module.exports = (sequelize) => {
         },
       },
       transaccion_origen_id: {
-        // Auto-referencia para el flujo de reversiones bancarias
+
         type: DataTypes.INTEGER,
         allowNull: true,
       },

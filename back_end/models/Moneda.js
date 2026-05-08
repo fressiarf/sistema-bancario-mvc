@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Moneda extends Model {
-    /**
-     * Una moneda puede estar asociada a múltiples cuentas.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       Moneda.hasMany(models.Cuenta, {
         foreignKey: 'moneda_id',

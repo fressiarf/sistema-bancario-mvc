@@ -8,10 +8,10 @@
     padding: 0 30px;
     position: fixed;
     top: 0;
-    left: 260px; /* Alineado exactamente después del sidebar */
+    left: 260px;
     width: calc(100% - 260px);
     z-index: 90;
-    box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+    box-sizing: border-box;
 }
 
 .search-box input {

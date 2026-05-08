@@ -4,10 +4,7 @@ const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class TasaInteres extends Model {
-    /**
-     * Cada tasa pertenece a un tipo de cuenta específico.
-     * @param {object} models - Todos los modelos cargados
-     */
+
     static associate(models) {
       TasaInteres.belongsTo(models.TipoCuenta, {
         foreignKey: 'tipo_cuenta_id',
@@ -52,7 +49,7 @@ module.exports = (sequelize) => {
         allowNull: true,
         validate: {
           isDate: { msg: 'La fecha de fin debe ser una fecha válida.' },
-          // Valida que fecha_fin sea posterior a fecha_ini si está presente
+
           esPosteriorAInicio(value) {
             if (value && this.fecha_ini && value <= this.fecha_ini) {
               throw new Error('La fecha de fin debe ser posterior a la fecha de inicio.');
