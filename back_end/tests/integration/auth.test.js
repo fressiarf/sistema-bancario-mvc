@@ -1,10 +1,16 @@
 const request = require('supertest');
 const app = require('../../index');
-const { sequelize, Usuario, Rol } = require('../../models');
+const { sequelize, Usuario, Rol, Sesion, LogAcceso, Cuenta, Transaccion } = require('../../models');
 const bcrypt = require('bcryptjs');
 
 beforeAll(async () => {
-  await Usuario.destroy({ where: {} });
+  // Limpiar tablas dependientes primero para evitar errores de clave foránea
+  await Transaccion.destroy({ where: {}, force: true });
+  await Cuenta.destroy({ where: {}, force: true });
+  await Sesion.destroy({ where: {}, force: true });
+  await LogAcceso.destroy({ where: {}, force: true });
+  await Usuario.destroy({ where: {}, force: true });
+
   const [rol] = await Rol.findOrCreate({ where: { nombre: 'Cliente' } });
   const hashedPassword = await bcrypt.hash('password123', 10);
   await Usuario.create({
@@ -17,7 +23,13 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await Usuario.destroy({ where: { email: 'auth_test@example.com' } });
+  // Limpiar específicamente los registros del usuario de prueba
+  const user = await Usuario.findOne({ where: { email: 'auth_test@example.com' } });
+  if (user) {
+    await Sesion.destroy({ where: { usuario_id: user.id } });
+    await LogAcceso.destroy({ where: { usuario_id: user.id } });
+    await Usuario.destroy({ where: { id: user.id } });
+  }
   await sequelize.close();
 });
 

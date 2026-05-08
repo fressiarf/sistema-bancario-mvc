@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../index');
-const { sequelize, Usuario, Rol } = require('../../models');
+const { sequelize, Usuario, Rol, Sesion, LogAcceso, Cuenta, Transaccion } = require('../../models');
 const jwt = require('jsonwebtoken');
 
 describe('Pruebas de Roles y Permisos', () => {
@@ -8,8 +8,12 @@ describe('Pruebas de Roles y Permisos', () => {
   let empleadoToken;
 
   beforeAll(async () => {
-
-    await Usuario.destroy({ where: {} });
+    // Limpiar todas las tablas dependientes para evitar errores de clave foránea
+    await Transaccion.destroy({ where: {}, force: true });
+    await Cuenta.destroy({ where: {}, force: true });
+    await Sesion.destroy({ where: {}, force: true });
+    await LogAcceso.destroy({ where: {}, force: true });
+    await Usuario.destroy({ where: {}, force: true });
 
     const [rolSA] = await Rol.findOrCreate({ where: { id: 5, nombre: 'SuperAdministrador' } });
     const [rolEmp] = await Rol.findOrCreate({ where: { id: 1, nombre: 'Empleado' } });
@@ -35,8 +39,12 @@ describe('Pruebas de Roles y Permisos', () => {
   });
 
   afterAll(async () => {
-
-    await Usuario.destroy({ where: {} });
+    // Limpiar tablas dependientes antes de usuarios
+    await Transaccion.destroy({ where: {}, force: true });
+    await Cuenta.destroy({ where: {}, force: true });
+    await Sesion.destroy({ where: {}, force: true });
+    await LogAcceso.destroy({ where: {}, force: true });
+    await Usuario.destroy({ where: {}, force: true });
     await sequelize.close();
   });
 

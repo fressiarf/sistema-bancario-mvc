@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../index');
-const { sequelize, Usuario, Rol, Cuenta, TipoCuenta, Moneda, TipoTransaccion, Sucursal } = require('../../models');
+const { sequelize, Usuario, Rol, Cuenta, TipoCuenta, Moneda, TipoTransaccion, Sucursal, Sesion, LogAcceso } = require('../../models');
 const jwt = require('jsonwebtoken');
 
 describe('Pruebas de Reglas de Negocio - Transacciones', () => {
@@ -10,10 +10,12 @@ describe('Pruebas de Reglas de Negocio - Transacciones', () => {
   let tipoTransaccionId;
 
   beforeAll(async () => {
-
-    await sequelize.models.Transaccion.destroy({ where: {} });
-    await Cuenta.destroy({ where: {} });
-    await Usuario.destroy({ where: {} });
+    // Limpiar tablas dependientes para evitar errores de clave foránea
+    await sequelize.models.Transaccion.destroy({ where: {}, force: true });
+    await Sesion.destroy({ where: {}, force: true });
+    await LogAcceso.destroy({ where: {}, force: true });
+    await Cuenta.destroy({ where: {}, force: true });
+    await Usuario.destroy({ where: {}, force: true });
 
     const [rol] = await Rol.findOrCreate({ where: { nombre: 'Administrador' } });
     const [moneda] = await Moneda.findOrCreate({
@@ -66,10 +68,12 @@ describe('Pruebas de Reglas de Negocio - Transacciones', () => {
   });
 
   afterAll(async () => {
-
-    await sequelize.models.Transaccion.destroy({ where: {} });
-    await Cuenta.destroy({ where: {} });
-    await Usuario.destroy({ where: {} });
+    // Limpiar tablas dependientes antes de usuarios
+    await sequelize.models.Transaccion.destroy({ where: {}, force: true });
+    await Sesion.destroy({ where: {}, force: true });
+    await LogAcceso.destroy({ where: {}, force: true });
+    await Cuenta.destroy({ where: {}, force: true });
+    await Usuario.destroy({ where: {}, force: true });
     await sequelize.close();
   });
 

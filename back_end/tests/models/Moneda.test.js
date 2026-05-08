@@ -1,7 +1,10 @@
-const { sequelize, Moneda } = require('../../models');
+const { sequelize, Moneda, Cuenta, Transaccion } = require('../../models');
 
 beforeAll(async () => {
   await sequelize.sync();
+  await Transaccion.destroy({ where: {}, force: true });
+  await Cuenta.destroy({ where: {}, force: true });
+  await Moneda.destroy({ where: {}, force: true });
 });
 
 afterAll(async () => {
